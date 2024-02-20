@@ -1,22 +1,22 @@
 const express = require('express');
+const bodyParser = require("body-parser");
+
 const app = express();
 
-app.get('/', (req, res) => {
-    res.send('<h1>hello world</h1>')
-});
+app.use(bodyParser.json());
 
-// Include route files
-const usersRoute = require('./routes/users');
-const productsRoute = require('./routes/products');
+const sayHi = (req, res) => {
+    res.send("Hi!");
+  };
+  
+app.get("/", sayHi);
 
-// Use routes
-app.use('/users', usersRoute);
-app.use('/products', productsRoute);
-
-// Specify the port to listen on
-const port = process.env.PORT || 3000;
+app.post("/add", (req, res) => {
+    const { a, b } = req.body;
+    res.send(`The sum is: ${a + b}`);
+  });
 
 // Start the server
-app.listen(port, () => {
-    console.log(`Node.js HTTP server is running on port ${port}`);
+app.listen(5000, () => {
+    console.log(`Server is running on port 5000.`);
 });
